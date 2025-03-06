@@ -1,16 +1,24 @@
+using DefaultNamespace;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public GameManager Instance = null;
+    private IGameApp gameApp;
+    
+    private void Awake()
     {
-        
-    }
+        if (!Instance)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            gameApp = new GameApp();
+            gameApp.StartApp();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
